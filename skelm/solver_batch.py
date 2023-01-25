@@ -87,9 +87,6 @@ class BatchCholeskySolver(BaseEstimator, RegressorMixin):
                 Solution can be updated without extra data by setting `X=None` and `y=None`.
         """
 
-        if not hasattr(self, "solver_"):
-            self.solver_ = CholeskySolver(self.alpha)
-
         if self.alpha < 0:
             raise ValueError("Regularization parameter alpha must be non-negative.")
 
@@ -105,6 +102,7 @@ class BatchCholeskySolver(BaseEstimator, RegressorMixin):
             msg = "A column-vector y was passed when a 1d array was expected.\
                    Please change the shape of y to (n_samples, ), for example using ravel()."
             warnings.warn(msg, DataConversionWarning)
+
 
         # do the model update + solution
         if forget:
